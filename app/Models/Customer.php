@@ -11,7 +11,7 @@ class Customer extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['cnpj', 'name', 'foundation_date'];
+    protected $fillable = ['cnpj', 'name', 'foundation_date', 'group_id'];
 
     public function group()
     {
