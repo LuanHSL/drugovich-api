@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\CreateCustumerServer;
-use App\Http\Controllers\CreateGroupServer;
-use App\Http\Controllers\DeleteCustumerServer;
-use App\Http\Controllers\DeleteGroupServer;
-use App\Http\Controllers\ListGroupServer;
-use App\Http\Controllers\LoginServer;
-use App\Http\Controllers\UpdateGroupServer;
+use App\Actions\Auth\AuthenticateAction;
+use App\Actions\Customer\CreateCustomerAction;
+use App\Actions\Customer\DeleteCustomerAction;
+use App\Actions\Group\CreateGroupAction;
+use App\Actions\Group\DeleteGroupAction;
+use App\Actions\Group\GetAllGroupAction;
+use App\Actions\Group\UpdateGroupAction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,22 +20,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', LoginServer::class);
+Route::post('/authenticate', AuthenticateAction::class);
 
 Route::middleware('manager.auth')->group(function () {
 
-    Route::get('/group', ListGroupServer::class);
+    Route::get('/group', GetAllGroupAction::class);
     
     Route::group(['prefix' => 'customer'], function () {
-        Route::post('/', CreateCustumerServer::class);
-        Route::delete('/{id}', DeleteCustumerServer::class);
+        Route::post('/', CreateCustomerAction::class);
+        Route::delete('/{id}', DeleteCustomerAction::class);
     });
 
     Route::middleware('manager.level.two')->group(function () {
         Route::group(['prefix' => 'group'], function () {
-            Route::delete('/{id}', DeleteGroupServer::class);
-            Route::post('/', CreateGroupServer::class);
-            Route::put('/', UpdateGroupServer::class);
+            Route::post('/', CreateGroupAction::class);
+            Route::put('/', UpdateGroupAction::class);
+            Route::delete('/{id}', DeleteGroupAction::class);
         });
     });
 });

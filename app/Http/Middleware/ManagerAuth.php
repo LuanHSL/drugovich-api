@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Exception;
 use Illuminate\Http\Request;
 
 class ManagerAuth
@@ -18,7 +17,7 @@ class ManagerAuth
     public function handle(Request $request, Closure $next)
     {
         if (!auth()->guard('manager')->check()) {
-            throw new Exception("gerente nao esta logado");
+            return response()->json(["messages" => "Você precisa estar logado para acessar esta página"], 401);
         }
         
         return $next($request);

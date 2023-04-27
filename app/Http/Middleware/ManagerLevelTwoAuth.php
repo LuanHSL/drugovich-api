@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Exception;
 use Illuminate\Http\Request;
 
 class ManagerLevelTwoAuth
@@ -19,7 +18,7 @@ class ManagerLevelTwoAuth
     public function handle(Request $request, Closure $next)
     {
         if (auth()->guard('manager')->user()->level != self::LEVEL_TWO) {
-            throw new Exception("vc não tem permissão");
+            return response()->json(["messages" => "Você não tem as permissões necessárias para acessar esta rota"], 403);
         }
         
         return $next($request);
