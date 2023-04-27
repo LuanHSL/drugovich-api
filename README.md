@@ -1,64 +1,110 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Drugovich API
+Este é um projeto de API RESTful desenvolvido em PHP utilizando o framework Laravel. A API é responsável por manipular os dados de Grupos e Clientes
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Arquitetura
 
-## About Laravel
+> Requisitos mínimos
+- [PHP ^7.4.10](https://www.php.net)
+- [Mysql 8](https://www.mysql.com)
+- [Composer](https://getcomposer.org)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Instalação
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Clone o repositório em seu computador:
+```sh
+git clone https://github.com/LuanHSL/drugovich-api.git
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Acesse a pasta do projeto:
+```sh
+cd drugovich-api
+```
 
-## Learning Laravel
+- Instale as dependências do projeto com o Composer:
+```sh
+composer install
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Duplique o arquivo **.env.example** e renomeie a cópia para **.env**:
+- Alterar os dados de banco no arquivo .env para os referente ao seu banco local
+- Popule seu banco de dados com as migrações e seeds:
+```sh
+php artisan migrate --seed
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Suba o servidor:
+```sh
+php artisan serve
+```
 
-## Laravel Sponsors
+## Dados técnicos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+> Logins do Gerente
+- Login no sistema (gerente nivel 1):
+  - E-mail: **gerente.level1@hotmail.com**
+  - Senha: **password**
 
-### Premium Partners
+- Login no sistema (gerente nivel 2):
+  - E-mail: **gerente.level2@hotmail.com**
+  - Senha: **password**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+> Lista de requisições
 
-## Contributing
+- Autenticação do gerente:
+  - Método: **POST**
+  - URL: **http://localhost:8000/authenticate**
+  - Request body (JSON):
+  ```sh
+  {
+    "email": "gerente.level1@hotmail.com",
+    "password": "password"
+  }
+  ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Cadastro de cliente:
+  - Método: **POST**
+  - URL: **http://localhost:8000/customer**
+  - Request body (JSON):
+  ```sh
+  {
+    "cnpj": "31.184.242.825/45",
+    "name": "Marcos Henrique",
+    "foundation_date": "2023-10-10 00:00:00",
+    "group_id": 1
+  }
+  ```
 
-## Code of Conduct
+- Exclusão de cliente:
+  - Método: **POST**
+  - URL: **http://localhost:8000/customer/{ID}**
+  - Onde {ID} é o ID do cliente que deseja excluir.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Listagem de grupos:
+  - Método: **GET**
+  - URL: **http://localhost:8000/group**
 
-## Security Vulnerabilities
+- Cadastro de grupo:
+  - Método: **POST**
+  - URL: **http://localhost:8000/group**
+  - Request body (JSON):
+  ```sh
+  {
+    "name": "Grupo A"
+  }
+  ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Atualização  de grupo:
+  Método: **PUT**
+  URL: **http://localhost:8000/group**
+  Request body (JSON):
+  ```sh
+  {
+    "id": 1,
+    "name": "Grupo A"
+  }
+  ```
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Exclusão de grupo:
+  - Método: **DELETE**
+  - URL: **http://localhost:8000/group/{ID}**
+  - Onde {ID} é o ID do grupo que deseja excluir.

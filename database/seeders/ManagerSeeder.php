@@ -14,6 +14,8 @@ class ManagerSeeder extends Seeder
    */
   public function run()
   {
-    Manager::factory()->count(10)->create();
+    Manager::factory()->levelOne()->create();
+    Manager::factory()->levelTwo()->create();
+    Manager::factory()->count(8)->create();
   }
 }
